@@ -2,7 +2,7 @@
 A Web App for students to upload and download Resources.
 
 ### Website
-[https://resource-sharing-platform.herokuapp.com/](https://resource-sharing-platform.herokuapp.com/)
+[https://resource-sharing-portal.tech/](https://resource-sharing-portal.tech/)
 
 
 ## Technology Stack
