@@ -1,17 +1,16 @@
 import { Route, Switch } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import Course from "./components/Course";
 import CustomNavbar from "./components/CustomNavbar";
 import Department from "./components/Department";
 import Footer from "./components/Footer";
 import HomePage from "./components/HomePage";
-import Loader from "./components/Loader";
 import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <ScrollToTop>
           <CustomNavbar/>
           <Switch>
@@ -24,13 +23,10 @@ const App = () => {
             <Route path="/course/:courseCode">
               <Course/>
             </Route>
-            <Route path="/loader">
-              <Loader/>
-            </Route>
           </Switch>
           <Footer/>
         </ScrollToTop>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
