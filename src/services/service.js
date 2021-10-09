@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = "http://3.109.139.132"
+const url = "https://rsp-api.herokuapp.com"
 
 const getUser = async () => {
     const user = await axios.get(`${url}/auth/user`, {
