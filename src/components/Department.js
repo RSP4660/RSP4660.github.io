@@ -3,17 +3,20 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import departments from '../constants/departments'
 import { getCourseByBranch } from '../services/service'
+import Loader from './Loader'
 
 
 const Department = () => {
 
     const {deptId} = useParams()
     const [courses, setCourses] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getCourseByBranch(deptId)
         .then((response) => {
             setCourses(response.courses)
+            setLoading(false)
         })
     }, [deptId]);
 
@@ -28,7 +31,9 @@ const Department = () => {
 
             <div class="container" style={{marginTop: "100px", marginBottom: "100px"}}>
                 <div class="row row-content">
-                    <h1 class="display-4 mb-5">{departments[deptId].name}</h1>
+                    <div className="col-12">
+                        <h1 class="display-4 mb-5">{departments[deptId].name}</h1>
+                    </div>
                 </div>
                 <div class="row row-content">
                     <div class="col-12">
@@ -36,11 +41,15 @@ const Department = () => {
                     </div>
                 </div>
                 <div class="row row-content">
-                    <p style={{marginTop: "70px", marginBottom: "50px"}}>
-                        {departments[deptId].description}
-                    </p>
+                    <div className="col-12">
+                        <p style={{marginTop: "70px", marginBottom: "50px"}}>
+                            {departments[deptId].description}
+                        </p>
+                    </div>
                 </div>
             </div>
+
+            {loading? <Loader/> :
 
             <div style={{backgroundColor: "#E9ECEF", paddingTop: "30px", paddingBottom: "30px"}}>
                 <div class="container" style={{marginTop: "100px", marginBottom: "100px"}}>
@@ -52,11 +61,11 @@ const Department = () => {
                         }
                     </div>
                     </div>
-                    <div class="row row-content">
+                    <div class="row row-content justify-content-center">
                         {courses.map((course) => {
                             return (
-                                <div class="col-12 col-md-4">
-                                    <div class="card card-dept">
+                                <div class="col-12 col-md-4 d-flex">
+                                    <div class="card card-dept" style={{width: "100%"}}>
                                         <Link to={`/course/${course.code}`}>
                                             <div class="card-body">
                                                 <h5 class="card-title">{course.code}</h5>
@@ -70,6 +79,8 @@ const Department = () => {
                     </div>
                 </div>
             </div>  
+
+            }
 
             <div class="container" style={{marginTop: "150px", marginBottom: "100px"}}>
                 <div class=" row row-section1">

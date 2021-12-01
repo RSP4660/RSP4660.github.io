@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const url = "https://rsp-api.herokuapp.com"
+// const url = "http://localhost:3001"
 
 const getUser = async () => {
     const user = await axios.get(`${url}/auth/user`, {
@@ -81,7 +82,7 @@ const addResource = async (courseId, formData) => {
     }
     catch (e) {
         if (e.response) {
-            return {error: e.response.data};
+            return {error: e.response.data.error};
         }
         return { error: "Encountered an exception! Please try again after sometime!"};
     }

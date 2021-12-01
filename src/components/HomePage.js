@@ -69,10 +69,10 @@ const HomePage = () => {
                 <p>Browse through your Department</p>
               </div>
             </div>
-            <div className="row">
+            <div className="row justify-content-center">
               {departments.map((item, index) => {
                 return (
-                  <div className="col-12 col-md-6">
+                  <div className="col-12 col-md-6" key={index}>
                     <Link to={`/department/${item.id}`}>
                       <div className="card-section1" id="card-section1">
                         <img src={item.imgLink} alt="img"/>
@@ -87,20 +87,20 @@ const HomePage = () => {
           
 
           <div style={{backgroundColor: "#E9ECEF", paddingTop: "30px", paddingBottom: "100px"}}>
-            <div class="container" style={{marginTop: "100px", marginBottom: "100px"}}>
-              <div class="row bg-dark">
-                <div class="col-12" style={{textAlign: "center"}}>
-                  <h2 class="text-white mt-5 display-4">Search your course</h2>
+            <div className="container" style={{marginTop: "100px", marginBottom: "100px"}}>
+              <div className="row bg-dark">
+                <div className="col-12" style={{textAlign: "center"}}>
+                  <h2 className="text-white mt-5 display-4">Search your course</h2>
                 </div>
-                <div class="col-12">
-                  <div class="m-4 bg-light">
-                    <form class="p-5" action="/crssrch" method="post">
-                      <div class="row">
-                        <div class="form-group col-md-8" style={{textAlign: "center"}}>
-                          <input type="text" class="form-control" id="ccode" name="ccode" placeholder="Enter Course" required />
+                <div className="col-12">
+                  <div className="m-4 bg-light">
+                    <form className="p-5" action="/crssrch" method="post">
+                      <div className="row">
+                        <div className="form-group col-md-8" style={{textAlign: "center"}}>
+                          <input type="text" className="form-control" id="ccode" name="ccode" placeholder="Enter Course" required />
                         </div>
-                        <div class="form-group col-md-4" style={{textAlign: "center"}}>
-                          <button type="submit" class="btn btn-dark">Search Course</button>
+                        <div className="form-group col-md-4" style={{textAlign: "center"}}>
+                          <button type="submit" className="btn btn-dark">Search Course</button>
                         </div>
                       </div>
                     </form>

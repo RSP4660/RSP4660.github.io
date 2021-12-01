@@ -12,6 +12,7 @@ const Course = () => {
 
     const [course, setCourse] = useState(null)
     const [resources, setResources] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         getCourseByCode(courseCode)
@@ -25,9 +26,12 @@ const Course = () => {
             })
         })
         
+        setLoading(false)
     }, [courseCode]);
 
     const uploadResource = async (e) => {
+        setLoading(true)
+
         e.preventDefault()
         
         const formData = new FormData();
@@ -50,9 +54,11 @@ const Course = () => {
         else {
             alert(status.error)
         }
+
+        setLoading(false)
     }
 
-    if(course==null) {
+    if(course==null || loading) {
         return <Loader/>
     }
     else {
@@ -73,13 +79,16 @@ const Course = () => {
 
                 <div class="container" style={{marginTop: "100px", marginBottom: "100px"}}>
                     <div class="row row-content">
-                        <h1>{course.name}</h1>
+                        <h1 className="col-12 mb-2">{course.name}</h1>
+                        <h3 className="col-12 text-muted">{course.code}</h3>
                     </div>
                     <div class="row row-content" style={{marginTop: "50px", marginBottom: "50px"}}>
-                        <h3 style={{marginBottom: "30px"}}>Content</h3>
-                        <p>
-                        {course.description}
-                        </p>
+                        <div className="col-12">
+                            <h3 style={{marginBottom: "30px"}}>Content</h3>
+                            <p>
+                                {course.description}
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -93,11 +102,11 @@ const Course = () => {
                             }
                         </div>
                         </div>
-                        <div class="row row-content">
+                        <div class="row row-content justify-content-center">
                             {resources.map((resource) => {
                                 return (
-                                    <div class="col-12 col-md-4">
-                                        <div class="card card-dept">
+                                    <div class="col-12 col-md-4 d-flex">
+                                        <div class="card card-dept" style={{width: "100%"}}>
                                             <div class="card-header">
                                                 <h4>
                                                 {resource.title}
