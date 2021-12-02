@@ -86,7 +86,7 @@ const HomePage = () => {
           </div>
           
 
-          <div style={{backgroundColor: "#E9ECEF", paddingTop: "30px", paddingBottom: "100px"}}>
+          {/* <div style={{backgroundColor: "#E9ECEF", paddingTop: "30px", paddingBottom: "100px"}}>
             <div className="container" style={{marginTop: "100px", marginBottom: "100px"}}>
               <div className="row bg-dark">
                 <div className="col-12" style={{textAlign: "center"}}>
@@ -108,7 +108,7 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
 
 
         </div>

@@ -4,13 +4,22 @@ const url = "https://rsp-api.herokuapp.com"
 // const url = "http://localhost:3001"
 
 const getUser = async () => {
-    const user = await axios.get(`${url}/auth/user`, {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem('token')}`
+    try {
+        const user = await axios.get(`${url}/auth/user`, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        console.log(user.data)
+        return user.data;
+    } 
+    catch (e){
+        if (e.response) {
+            return e.response.data;
         }
-    });
-    console.log(user.data)
-    return user.data;
+        return { error: "Encountered an exception! Please try again after sometime!"};
+    }
+
 }
 
 const LogIn = async (email, password) => {

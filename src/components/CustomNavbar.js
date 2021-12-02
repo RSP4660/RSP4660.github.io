@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Container, Form, FormControl, Modal, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Alert, Button, Container, Modal, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import departments from '../constants/departments'
-import { getUser, LogIn, signUp } from '../services/service'
+import { logInUser, logout, setUser } from '../redux/actions/authActions'
+import { getUser, signUp } from '../services/service'
 import logo from '../static/img/logo.png'
 
 
 const CustomNavbar = () => {
 
-    const [user, setUser] = useState(null);
+    const dispatch = useDispatch()
+    const {user, error} = useSelector((state) => state.logIn)
 
     const [signUpState, setSignUpState] = useState(false);
     const closeSignUp = () => setSignUpState(false);
@@ -19,11 +23,18 @@ const CustomNavbar = () => {
     const showLogIn = () => setLogInState(true);
 
     useEffect(() => {
-        getUser()
-        .then((user) => {
-            setUser(user)
-        })  
-    }, []);
+        if(localStorage.getItem("token")) {
+            getUser()
+            .then ((data) => {
+                dispatch(setUser(data))
+            })
+        }
+
+        if(user) {
+            closeLogIn()
+            closeSignUp()
+        }
+    },)
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -46,7 +57,7 @@ const CustomNavbar = () => {
             setSignUpState(false)
             getUser()
             .then((user) => {
-                setUser(user)
+                // setUser(user)
             }) 
         }
         else {
@@ -57,27 +68,15 @@ const CustomNavbar = () => {
     const handleLogIn = async (e) => {
         e.preventDefault();
 
-        const response = await LogIn(
-            e.target['email'].value,
+        dispatch(logInUser(
+            e.target['email'].value, 
             e.target['password'].value
-        )
-
-        if(response.token) {
-            localStorage.setItem('token', response.token)
-            setLogInState(false)
-            getUser()
-            .then((user) => {
-                setUser(user)
-            }) 
-        }
-        else {
-            alert(response.error)
-        }
+        ))
     }
 
     const handleLogOut = async () => {
         localStorage.clear()
-        setUser(null)
+        dispatch(logout())
     }
 
     return (
@@ -100,12 +99,12 @@ const CustomNavbar = () => {
                             </NavDropdown>
                         </Nav>
 
-                        <Form inline>
+                        {/* <Form inline>
                             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                        </Form>
+                        </Form> */}
 
                         {user
-                            ?
+                            ? 
                             <ul className="navbar-nav order-3">
                                 <NavDropdown title={user.username} id="collasible-nav-dropdown">
                                     <NavDropdown.Item onClick={handleLogOut}>Log Out</NavDropdown.Item>
@@ -136,6 +135,14 @@ const CustomNavbar = () => {
 				</div>
 				<div className="modal-body">
                     <form onSubmit={handleLogIn}>
+                        {error? 
+                            <Alert variant="danger">
+                            {error}
+                            </Alert>
+                        : 
+                            <div></div>
+                        }
+
                         <div className="form-group">
                             <label for="Email">Email</label>
                             <input type="email" className="form-control" id="Email" aria-describedby="emailHelp"
@@ -146,6 +153,7 @@ const CustomNavbar = () => {
                             <input type="password" className="form-control" id="Password" name="password"
                                 placeholder="Password" required />
                         </div>
+                
                         <button type="submit" className="btn btn-primary">Log In</button>
                     </form>	
 				</div>
